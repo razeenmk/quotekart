@@ -172,6 +172,19 @@ function writr_scripts() {
 add_action( 'wp_enqueue_scripts', 'writr_scripts' );
 
 /**
+ * Load the focused dashboard assets only on the My Panel page template.
+ */
+function writr_dads_dashboard_assets() {
+	if ( ! is_page_template( 'template-mypanel.php' ) ) {
+		return;
+	}
+
+	wp_enqueue_style( 'writr-dads-dashboard', get_template_directory_uri() . '/css/dads-dashboard.css', array(), '1.0.0' );
+	wp_enqueue_script( 'writr-dads-dashboard', get_template_directory_uri() . '/js/dads-dashboard.js', array(), '1.0.0', true );
+}
+add_action( 'wp_enqueue_scripts', 'writr_dads_dashboard_assets', 20 );
+
+/**
  * Enqueue Google fonts style to admin screen for custom header display.
  */
 function writr_admin_fonts( $hook_suffix ) {
